@@ -8,7 +8,7 @@
     <artifactId>assignment</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <build>
+    <!-- <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -23,7 +23,7 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build>
+    </build> -->
 
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
