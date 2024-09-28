@@ -10,8 +10,8 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+//import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
@@ -26,7 +26,7 @@ public class CreateIndex {
         Directory directory = FSDirectory.open(Paths.get(indexPath));
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
 
-        config.setOpenmode(IndexWriterConfig.OpenMode.CREATE);
+        config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
 
         IndexWriter iwriter = new IndexWriter(directory, config);
 
@@ -50,7 +50,7 @@ public class CreateIndex {
                 currField = returnField(fileLine);
 
                 if (!prevField.equals(".I")) {
-                    document.add(newTextField(prevField, data, Field.Store.YES));
+                    document.add(new TextField(prevField, data, Field.Store.YES));
                 }
                 if (fileLine.startsWith(".I")) {
                     documentID = fileLine.substring(3);

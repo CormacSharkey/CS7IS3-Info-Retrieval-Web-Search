@@ -1,5 +1,6 @@
 package com.csharkey.index;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+//import org.apache.lucene.analysis.Analyzer;
 
 
 public class App {
