@@ -20,7 +20,7 @@ import org.apache.lucene.document.TextField;
 public class CreateIndex {
 
     private String cranPath = "../cran/cran.all.1400";
-    private String indexPath = "../index"
+    private String indexPath = "../index";
 
     public void createIndex(Analyzer analyzer) {
         Directory directory = FSDirectory.open(Paths.get(indexPath));
