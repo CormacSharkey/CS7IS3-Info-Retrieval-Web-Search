@@ -7,7 +7,7 @@ public class App {
     public static void main(String[] args) {
         System.out.println("Hello World!");
 
-        CreateIndex newIndex = new createIndex(new StandardAnalyzer());
+        CreateIndex newIndex = new CreateIndex(new StandardAnalyzer());
 
     }
 }
