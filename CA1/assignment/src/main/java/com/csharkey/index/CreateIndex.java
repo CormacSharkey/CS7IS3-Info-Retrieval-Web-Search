@@ -28,7 +28,7 @@ public class CreateIndex {
 
         config .setOpenmode(IndexWriterConfig.OpenMode.CREATE);
 
-        IndexWritier writer = new IndexWriter(directory, config);
+        IndexWritier iwriter = new IndexWriter(directory, config);
 
         FileInputStream fstream = new FileInputStream(cranPath);
         BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
