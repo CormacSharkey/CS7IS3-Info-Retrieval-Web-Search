@@ -26,14 +26,14 @@ public class CreateIndex {
         Directory directory = FSDirectory.open(Paths.get(indexPath));
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
 
-        config .setOpenmode(IndexWriterConfig.OpenMode.CREATE);
+        config.setOpenmode(IndexWriterConfig.OpenMode.CREATE);
 
-        IndexWritier iwriter = new IndexWriter(directory, config);
+        IndexWriter iwriter = new IndexWriter(directory, config);
 
         FileInputStream fstream = new FileInputStream(cranPath);
         BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 
-        Arrayist<document> documentsList = new ArrayList<Document>();
+        ArrayList<Document> documentsList = new ArrayList<Document>();
         Document document = new Document();
 
         String fileLine;
