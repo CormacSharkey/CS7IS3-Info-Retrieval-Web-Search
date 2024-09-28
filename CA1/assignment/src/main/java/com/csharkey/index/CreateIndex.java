@@ -22,7 +22,7 @@ public class CreateIndex {
     private String cranPath = "../cran/cran.all.1400";
     private String indexPath = "../index";
 
-    public void CreateIndex(Analyzer analyzer) {
+    public CreateIndex(Analyzer analyzer) {
         Directory directory = FSDirectory.open(Paths.get(indexPath));
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
 
