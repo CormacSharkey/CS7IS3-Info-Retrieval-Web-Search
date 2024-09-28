@@ -2,6 +2,7 @@ package com.csharkey.index;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -19,10 +20,10 @@ import org.apache.lucene.document.TextField;
 
 public class CreateIndex {
 
-    private String cranPath = "../cran/cran.all.1400";
-    private String indexPath = "../index";
+    private static String cranPath = "../cran/cran.all.1400";
+    private static String indexPath = "../index";
 
-    public CreateIndex(Analyzer analyzer) {
+    public CreateIndex(Analyzer analyzer) throws IOException {
         Directory directory = FSDirectory.open(Paths.get(indexPath));
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
 
