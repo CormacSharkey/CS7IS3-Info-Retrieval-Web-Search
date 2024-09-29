@@ -1,8 +1,8 @@
 package com.csharkey.index;
 import java.io.IOException;
 
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 //import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 
 
 public class App {
