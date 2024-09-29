@@ -39,12 +39,12 @@
   </dependency>
 
 
-    <!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-analysis-common
+    <!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-analysis-common -->
   <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-analyzers-common</artifactId>
       <version>${lucene.version}</version>
-  </dependency> -->
+  </dependency>
 
   <dependency>
       <groupId>org.apache.lucene</groupId>
