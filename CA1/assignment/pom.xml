@@ -13,8 +13,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.release>11</maven.compiler.release>
-    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.release>1.7</maven.compiler.release>
+    <maven.compiler.target>1.7</maven.compiler.target>
     <lucene.version>9.11.1</lucene.version>
   </properties>
 
