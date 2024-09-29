@@ -14,6 +14,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>11</maven.compiler.release>
+    <maven.compiler.target>11</maven.compiler.target>
     <lucene.version>9.11.1</lucene.version>
   </properties>
 
@@ -34,7 +35,7 @@
   <dependency>
     <groupId>org.apache.lucene</groupId>
     <artifactId>lucene-core</artifactId>
-    <version>9.11.1</version>
+    <version>${lucene.version}</version>
   </dependency>
 
 
@@ -42,13 +43,13 @@
   <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-analysis-common</artifactId>
-      <version>9.11.1</version>
+      <version>${lucene.version}</version>
   </dependency>
 
   <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-queryparser</artifactId>
-      <version>9.11.1</version>
+      <version>${lucene.version}</version>
   </dependency>
 
     <dependency>
