@@ -18,6 +18,7 @@
     <lucene.version>9.11.1</lucene.version>
   </properties>
 
+<dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>org.junit</groupId>
@@ -26,6 +27,7 @@
       <type>pom</type>
       <scope>import</scope>
     </dependency>
+</dependencyManagement>
 
     <dependency>
       <groupId>org.apache.lucene</groupId>
