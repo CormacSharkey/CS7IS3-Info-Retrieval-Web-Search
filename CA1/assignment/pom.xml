@@ -15,7 +15,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>11</maven.compiler.release>
     <maven.compiler.target>11</maven.compiler.target>
-    <lucene.version>9.11.1</lucene.version>
+    <lucene.version>8.6.3</lucene.version>
   </properties>
 
   <dependencyManagement>
@@ -39,12 +39,12 @@
   </dependency>
 
 
-    <!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-analysis-common -->
+    <!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-analysis-common
   <dependency>
       <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-analysis-common</artifactId>
+      <artifactId>lucene-analyzers-common</artifactId>
       <version>${lucene.version}</version>
-  </dependency>
+  </dependency> -->
 
   <dependency>
       <groupId>org.apache.lucene</groupId>
