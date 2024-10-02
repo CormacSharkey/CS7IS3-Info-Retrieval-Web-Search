@@ -21,7 +21,7 @@ import org.apache.lucene.document.TextField;
 
 public class IndexCran {
 
-    private static String cranPath = "/home/csharkey/InfoAssignments/CS7IS3-Info-Retrieval-Web-Search/cran/cran.all.1400";
+    private static String cranPath = "/home/csharkey/InfoAssignments/CS7IS3-Info-Retrieval-Web-Search/assignment/cran/cran.all.1400";
     private static String indexPath = "../index";
 
     public IndexCran() throws IOException {

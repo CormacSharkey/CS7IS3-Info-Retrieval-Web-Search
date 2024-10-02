@@ -27,7 +27,7 @@ public class QueryCran {
 
     private static int MAX_RESULTS = 50;
 
-    private static String cranPath = "/home/csharkey/InfoAssignments/CS7IS3-Info-Retrieval-Web-Search/cran/cran.qry";
+    private static String cranPath = "/home/csharkey/InfoAssignments/CS7IS3-Info-Retrieval-Web-Search/assignment/cran/cran.qry";
     private static String INDEX_DIRECTORY = "../index";
 
     public QueryCran() throws IOException, ParseException{
