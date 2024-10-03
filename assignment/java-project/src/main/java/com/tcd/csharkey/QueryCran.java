@@ -20,8 +20,7 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.similarities.BM25Similarity;
-import org.apache.lucene.search.similarities.ClassicSimilarity;
+import org.apache.lucene.search.similarities.Similarity;
 
 public class QueryCran {
 
@@ -30,15 +29,14 @@ public class QueryCran {
     private static String cranPath = "/home/csharkey/InfoAssignments/CS7IS3-Info-Retrieval-Web-Search/assignment/cran/cran.qry";
     private static String INDEX_DIRECTORY = "../index";
 
-    public QueryCran() throws IOException, ParseException{
-        Analyzer analyzer = new StandardAnalyzer();
+    public QueryCran(Analyzer analyzer, Similarity similarity) throws IOException, ParseException{
 
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIRECTORY));
 
         DirectoryReader ireader = DirectoryReader.open(directory);
 		IndexSearcher isearcher = new IndexSearcher(ireader);
 
-        isearcher.setSimilarity(new BM25Similarity());
+        isearcher.setSimilarity(similarity);
 
         QueryParser queryParser = new QueryParser("body", analyzer);
 
@@ -78,11 +76,12 @@ public class QueryCran {
 
         System.out.println(queryList.size());
 
+        counter = 1;
         for (String q : queryList) {
             q = q.trim();
             q = q.replace("?", "");
 
-            System.out.println(q);
+            System.out.println(counter + ". " + q);
 
             Query query = queryParser.parse(q);
 
@@ -92,9 +91,10 @@ public class QueryCran {
             for (int i = 0; i < hits.length; i++) {
                 Document hitDoc = isearcher.storedFields().document(hits[i].doc);
                 System.out.println(i + ") " + hitDoc.get("id") + " " + hits[i].score);
-        }
+            }
 
-        System.out.println();
+            System.out.println();
+            counter += 1;
         }
 
         // System.out.println(queryString);
