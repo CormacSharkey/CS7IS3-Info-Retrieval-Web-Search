@@ -9,31 +9,28 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
 
-import org.apache.lucene.analysis.Analyzer;
-//import org.apache.lucene.analysis.en.EnglishAnalyzer;
-// import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
 
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.similarities.Similarity;
 
 public class QueryCran {
 
     private static int MAX_RESULTS = 50;
 
-    private static String cranPath = "/home/csharkey/InfoAssignments/CS7IS3-Info-Retrieval-Web-Search/assignment/cran/cran.qry";
-    private static String INDEX_DIRECTORY = "../index";
+    private static String cranPath = "../cran/cran.qry";
+    private static String indexPath = "../index";
+    private static String resultsPath = "../query-results/";
 
     public QueryCran(QuerySpecs specs) throws IOException, ParseException{
 
-        Directory directory = FSDirectory.open(Paths.get(INDEX_DIRECTORY));
+        Directory directory = FSDirectory.open(Paths.get(indexPath));
 
         DirectoryReader ireader = DirectoryReader.open(directory);
 		IndexSearcher isearcher = new IndexSearcher(ireader);
@@ -76,9 +73,9 @@ public class QueryCran {
 
         queryList.add(queryString);
 
-        System.out.println(queryList.size());
+        // System.out.println(queryList.size());
 
-        File resultsFile = new File("../query-results/" + specs.getScoringApproach() + "-res.txt");
+        File resultsFile = new File(resultsPath + specs.getScoringApproach() + "-res.txt");
         if (resultsFile.createNewFile()) {
             System.out.println("File created: " + resultsFile.getName());
         } 
@@ -86,7 +83,7 @@ public class QueryCran {
             System.out.println("File already exists.");
         }
 
-        FileWriter myWriter = new FileWriter("../query-results/" + specs.getScoringApproach() + "-res.txt");
+        FileWriter myWriter = new FileWriter(resultsPath + specs.getScoringApproach() + "-res.txt");
 
         // try {
         //     File resultsFile = new File("test.txt");
@@ -115,27 +112,27 @@ public class QueryCran {
             q = q.trim();
             q = q.replace("?", "");
 
-            System.out.println(counter + ". " + q);
+            // System.out.println(counter + ". " + q);
 
             Query query = queryParser.parse(q);
 
             ScoreDoc[] hits = isearcher.search(query, MAX_RESULTS).scoreDocs;
 
-            System.out.println("Documents: " + hits.length);
+            // System.out.println("Documents: " + hits.length);
 
-            for (int i = 0; i < hits.length; i++) {
-                Document hitDoc = isearcher.storedFields().document(hits[i].doc);
+            for (int i = 1; i < hits.length+1; i++) {
+                Document hitDoc = isearcher.storedFields().document(hits[i-1].doc);
                 // System.out.println(i + ") " + hitDoc.get("id") + " " + hits[i].score);
 
-                myWriter.write(counter + " Q0 " + hitDoc.get("id") + " " + i + " " + hits[i].score + " STANDARD" + "\n");
+                myWriter.write(counter + " Q0 " + hitDoc.get("id") + " " + i + " " + hits[i-1].score + " " + specs.getScoringApproach() + "\n");
             }
 
-            System.out.println();
+            // System.out.println();
             counter += 1;
         }
 
         myWriter.close();
-        System.out.println("Successfully wrote to the file.");
+        System.out.println("Added file: " + specs.getScoringApproach() + "-res.txt");
 
         ireader.close();
         directory.close();

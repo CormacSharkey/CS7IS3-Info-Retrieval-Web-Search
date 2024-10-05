@@ -2,19 +2,19 @@ package com.tcd.csharkey;
 
 import java.io.IOException;
 
-import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.search.similarities.SimilarityBase;
 import org.apache.lucene.search.similarities.BM25Similarity;
 import org.apache.lucene.search.similarities.ClassicSimilarity;
-import org.apache.lucene.search.similarities.Similarity;
+import org.apache.lucene.search.similarities.DFISimilarity;
 
 // Currently using StandardAnalyzer and BM25Similarity
 // TODO:    Create a custom analyzer
 // TODO:    Implement multiple scoring similarities (including at least the Vector Space Model and BM25)
 //          Store results of similarity scoring in document for trec eval
-// TODO:    Reformat qrels
+//          Reformat qrels
 // TODO:    Run trec eval on each document
 // TODO:    Generate Mean Average Precision and Recall scores based upon the provided relevance judgements using TREC Eval
 // TODO:    "Comment and optimize code"
@@ -31,6 +31,7 @@ public class App {
         QuerySpecs standardVSM = new QuerySpecs("Standard-VSM", new StandardAnalyzer(), new ClassicSimilarity());
         IndexCran indexSV = new IndexCran(standardVSM);
         QueryCran querySV = new QueryCran(standardVSM);
+
 
 
         QuerySpecs englishBM25 = new QuerySpecs("English-BM25", new EnglishAnalyzer(), new BM25Similarity());
