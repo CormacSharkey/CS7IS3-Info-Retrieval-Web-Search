@@ -6,10 +6,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
 
 import org.apache.lucene.analysis.Analyzer;
 //import org.apache.lucene.analysis.en.EnglishAnalyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
+// import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.store.FSDirectory;
@@ -76,6 +78,38 @@ public class QueryCran {
 
         System.out.println(queryList.size());
 
+        File resultsFile = new File("../query-results/test.txt");
+        if (resultsFile.createNewFile()) {
+            System.out.println("File created: " + resultsFile.getName());
+        } 
+        else {
+            System.out.println("File already exists.");
+        }
+
+        FileWriter myWriter = new FileWriter("../query-results/test.txt");
+
+        // try {
+        //     File resultsFile = new File("test.txt");
+        //     if (resultsFile.createNewFile()) {
+        //       System.out.println("File created: " + resultsFile.getName());
+        //     } 
+        //     else {
+        //       System.out.println("File already exists.");
+        //     }
+        // } 
+        // catch (IOException e) {
+        //     System.out.println("An error occurred.");
+        //     e.printStackTrace();
+        // }
+
+        // try {
+        //     FileWriter myWriter = new FileWriter("test.txt");
+        // } 
+        // catch (IOException e) {
+        //     System.out.println("An error occurred.");
+        //     e.printStackTrace();
+        // }
+
         counter = 1;
         for (String q : queryList) {
             q = q.trim();
@@ -88,14 +122,24 @@ public class QueryCran {
             ScoreDoc[] hits = isearcher.search(query, MAX_RESULTS).scoreDocs;
 
             System.out.println("Documents: " + hits.length);
+
             for (int i = 0; i < hits.length; i++) {
                 Document hitDoc = isearcher.storedFields().document(hits[i].doc);
-                System.out.println(i + ") " + hitDoc.get("id") + " " + hits[i].score);
+                // System.out.println(i + ") " + hitDoc.get("id") + " " + hits[i].score);
+
+                myWriter.write(counter + " Q0 " + hitDoc.get("id") + " " + i + " " + hits[i].score + " STANDARD" + "\n");
             }
 
             System.out.println();
             counter += 1;
         }
+
+        myWriter.close();
+        System.out.println("Successfully wrote to the file.");
+
+        ireader.close();
+        directory.close();
+        fstream.close();
 
         // System.out.println(queryString);
 
@@ -112,10 +156,6 @@ public class QueryCran {
         // }
 
         // System.out.println();
-
-        ireader.close();
-        directory.close();
-        fstream.close();
     }
     
 }
