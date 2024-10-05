@@ -25,13 +25,23 @@ public class App {
     private static String cranPath = "/home/csharkey/InfoAssignments/CS7IS3-Info-Retrieval-Web-Search/assignment/cran/cran.all.1400";
     private static String indexPath = "../index";
     public static void main(String[] args) throws IOException, ParseException {
-        Analyzer analyzerStandard = new StandardAnalyzer();
-        Analyzer analyzerEnglish = new EnglishAnalyzer();
-        Similarity similarityBM25 = new BM25Similarity();
-        Similarity similarityVSM = new ClassicSimilarity();
 
-        IndexCran newIndexCran = new IndexCran(analyzerStandard);
-        QueryCran newQueryCran = new QueryCran(analyzerStandard, similarityBM25);
+        QuerySpecs standardBM25 = new QuerySpecs("Standard-BM25", new StandardAnalyzer(), new BM25Similarity());
+        IndexCran newIndexCran = new IndexCran(standardBM25);
+        QueryCran newQueryCran = new QueryCran(standardBM25);
+
+        QuerySpecs standardVSM = new QuerySpecs("Standard-VSM", new StandardAnalyzer(), new ClassicSimilarity());
+        IndexCran newIndexCran = new IndexCran(standardVSM);
+        QueryCran newQueryCran = new QueryCran(standardVSM);
+
+
+        QuerySpecs englishBM25 = new QuerySpecs("English-BM25", new EnglishAnalyzer(), new BM25Similarity());
+        IndexCran newIndexCran = new IndexCran(englishBM25);
+        QueryCran newQueryCran = new QueryCran(englishBM25);
+
+        QuerySpecs englishVSM = new QuerySpecs("English-VSM", new EnglishAnalyzer(), new ClassicSimilarity());
+        IndexCran newIndexCran = new IndexCran(englishVSM);
+        QueryCran newQueryCran = new QueryCran(englishVSM);
 
     }
 
