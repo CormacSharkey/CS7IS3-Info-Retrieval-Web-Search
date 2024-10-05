@@ -21,10 +21,10 @@ public class IndexCran {
     private String cranPath = "/home/csharkey/InfoAssignments/CS7IS3-Info-Retrieval-Web-Search/assignment/cran/cran.all.1400";
     private String indexPath = "../index";
 
-    public IndexCran(Analyzer analyzer) throws IOException {
+    public IndexCran(QuerySpecs specs) throws IOException {
 
         Directory directory = FSDirectory.open(Paths.get(indexPath));
-        IndexWriterConfig config = new IndexWriterConfig(analyzer);
+        IndexWriterConfig config = new IndexWriterConfig(specs.getAnalyzer());
 
         config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
 

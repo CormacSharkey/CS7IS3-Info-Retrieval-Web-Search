@@ -22,26 +22,24 @@ import org.apache.lucene.search.similarities.Similarity;
 
 public class App {
 
-    private static String cranPath = "/home/csharkey/InfoAssignments/CS7IS3-Info-Retrieval-Web-Search/assignment/cran/cran.all.1400";
-    private static String indexPath = "../index";
     public static void main(String[] args) throws IOException, ParseException {
 
         QuerySpecs standardBM25 = new QuerySpecs("Standard-BM25", new StandardAnalyzer(), new BM25Similarity());
-        IndexCran newIndexCran = new IndexCran(standardBM25);
-        QueryCran newQueryCran = new QueryCran(standardBM25);
+        IndexCran indexSB = new IndexCran(standardBM25);
+        QueryCran querySB = new QueryCran(standardBM25);
 
         QuerySpecs standardVSM = new QuerySpecs("Standard-VSM", new StandardAnalyzer(), new ClassicSimilarity());
-        IndexCran newIndexCran = new IndexCran(standardVSM);
-        QueryCran newQueryCran = new QueryCran(standardVSM);
+        IndexCran indexSV = new IndexCran(standardVSM);
+        QueryCran querySV = new QueryCran(standardVSM);
 
 
         QuerySpecs englishBM25 = new QuerySpecs("English-BM25", new EnglishAnalyzer(), new BM25Similarity());
-        IndexCran newIndexCran = new IndexCran(englishBM25);
-        QueryCran newQueryCran = new QueryCran(englishBM25);
+        IndexCran indexEB = new IndexCran(englishBM25);
+        QueryCran queryEB = new QueryCran(englishBM25);
 
         QuerySpecs englishVSM = new QuerySpecs("English-VSM", new EnglishAnalyzer(), new ClassicSimilarity());
-        IndexCran newIndexCran = new IndexCran(englishVSM);
-        QueryCran newQueryCran = new QueryCran(englishVSM);
+        IndexCran indexEV = new IndexCran(englishVSM);
+        QueryCran queryEV = new QueryCran(englishVSM);
 
     }
 

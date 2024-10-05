@@ -31,16 +31,16 @@ public class QueryCran {
     private static String cranPath = "/home/csharkey/InfoAssignments/CS7IS3-Info-Retrieval-Web-Search/assignment/cran/cran.qry";
     private static String INDEX_DIRECTORY = "../index";
 
-    public QueryCran(Analyzer analyzer, Similarity similarity) throws IOException, ParseException{
+    public QueryCran(QuerySpecs specs) throws IOException, ParseException{
 
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIRECTORY));
 
         DirectoryReader ireader = DirectoryReader.open(directory);
 		IndexSearcher isearcher = new IndexSearcher(ireader);
 
-        isearcher.setSimilarity(similarity);
+        isearcher.setSimilarity(specs.getSimilarity());
 
-        QueryParser queryParser = new QueryParser("body", analyzer);
+        QueryParser queryParser = new QueryParser("body", specs.getAnalyzer());
 
         ArrayList<String> queryList = new ArrayList<String>();
 
@@ -78,7 +78,7 @@ public class QueryCran {
 
         System.out.println(queryList.size());
 
-        File resultsFile = new File("../query-results/test.txt");
+        File resultsFile = new File("../query-results/" + specs.getScoringApproach() + "-res.txt");
         if (resultsFile.createNewFile()) {
             System.out.println("File created: " + resultsFile.getName());
         } 
@@ -86,7 +86,7 @@ public class QueryCran {
             System.out.println("File already exists.");
         }
 
-        FileWriter myWriter = new FileWriter("../query-results/test.txt");
+        FileWriter myWriter = new FileWriter("../query-results/" + specs.getScoringApproach() + "-res.txt");
 
         // try {
         //     File resultsFile = new File("test.txt");
