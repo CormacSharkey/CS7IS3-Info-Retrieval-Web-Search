@@ -19,7 +19,7 @@ import org.apache.lucene.store.FSDirectory;
 
 public class IndexCran {
 
-    private static String cranPath = "../cran/cran.qry";
+    private static String cranPath = "../cran/cran.all.1400";
     private static String indexPath = "../index";
 
     public IndexCran(QuerySpecs specs) throws IOException {
@@ -98,7 +98,7 @@ public class IndexCran {
         document.add(new TextField(currField, data, Field.Store.YES));
         documentsList.add(document);
 
-        System.out.println(documentsList.size());
+        // System.out.println(documentsList.size());
         
         iwriter.addDocuments(documentsList);
 
