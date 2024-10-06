@@ -73,61 +73,24 @@ public class QueryCran {
 
         queryList.add(queryString);
 
-        // System.out.println(queryList.size());
 
         File resultsFile = new File(resultsPath + specs.getScoringApproach() + "-res.txt");
-        // if (resultsFile.createNewFile()) {
-        //     System.out.println("File created: " + resultsFile.getName());
-        // } 
-        // else {
-        //     System.out.println("File already exists.");
-        // }
-
         FileWriter myWriter = new FileWriter(resultsPath + specs.getScoringApproach() + "-res.txt");
-
-        // try {
-        //     File resultsFile = new File("test.txt");
-        //     if (resultsFile.createNewFile()) {
-        //       System.out.println("File created: " + resultsFile.getName());
-        //     } 
-        //     else {
-        //       System.out.println("File already exists.");
-        //     }
-        // } 
-        // catch (IOException e) {
-        //     System.out.println("An error occurred.");
-        //     e.printStackTrace();
-        // }
-
-        // try {
-        //     FileWriter myWriter = new FileWriter("test.txt");
-        // } 
-        // catch (IOException e) {
-        //     System.out.println("An error occurred.");
-        //     e.printStackTrace();
-        // }
 
         counter = 1;
         for (String q : queryList) {
             q = q.trim();
             q = q.replace("?", "");
 
-            // System.out.println(counter + ". " + q);
-
             Query query = queryParser.parse(q);
 
             ScoreDoc[] hits = isearcher.search(query, MAX_RESULTS).scoreDocs;
 
-            // System.out.println("Documents: " + hits.length);
-
             for (int i = 1; i < hits.length+1; i++) {
                 Document hitDoc = isearcher.storedFields().document(hits[i-1].doc);
-                // System.out.println(i + ") " + hitDoc.get("id") + " " + hits[i].score);
-
                 myWriter.write(counter + " Q0 " + hitDoc.get("id") + " " + i + " " + hits[i-1].score + " " + specs.getScoringApproach() + "\n");
             }
 
-            // System.out.println();
             counter += 1;
         }
 
@@ -137,22 +100,6 @@ public class QueryCran {
         ireader.close();
         directory.close();
         fstream.close();
-
-        // System.out.println(queryString);
-
-        // queryString = queryString.trim();
-
-        // Query query = queryParser.parse(queryString);
-
-        // ScoreDoc[] hits = isearcher.search(query, MAX_RESULTS).scoreDocs;
-
-        // System.out.println("Documents: " + hits.length);
-        // for (int i = 0; i < hits.length; i++) {
-        //     Document hitDoc = isearcher.storedFields().document(hits[i].doc);
-        //     System.out.println(i + ") " + hitDoc.get(".I") + " " + hits[i].score);
-        // }
-
-        // System.out.println();
     }
     
 }

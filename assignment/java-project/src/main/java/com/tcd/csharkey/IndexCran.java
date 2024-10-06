@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
@@ -35,9 +36,6 @@ public class IndexCran {
         BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 
 
-        ArrayList<Document> documentsList = new ArrayList<Document>();
-        Document document = new Document();
-
         // if field is an id (.I, .T, .A, .B, .W)
             // store past and current field
             // if past field not .I (who has already had their data added to the doc)
@@ -60,6 +58,9 @@ public class IndexCran {
         String data = "";
         Boolean dataFlag = true;
         Boolean firstFlag = true;
+
+        ArrayList<Document> documentsList = new ArrayList<Document>();
+        Document document = new Document();
 
         fileline = br.readLine();
         while ((fileline) != null) {
@@ -98,8 +99,6 @@ public class IndexCran {
         document.add(new TextField(currField, data, Field.Store.YES));
         documentsList.add(document);
 
-        // System.out.println(documentsList.size());
-        
         iwriter.addDocuments(documentsList);
 
         iwriter.close();
@@ -130,46 +129,4 @@ public class IndexCran {
             return "X";
         }
     }
-
-    // public String extractTagName(String tag) {
-    //     if (isIdTag(tag)) {
-    //         return "ID";
-    //     } 
-    //     else if (isTitleTag(tag)) {
-    //         return "Title";
-    //     }
-    //     else if (isAuthorTag(tag)) {
-    //         return "Author";
-    //     }
-    //     else if (isBibTag(tag)) {
-    //         return "Bibliography";
-    //     }
-    //     else {
-    //         return "Body";
-    //     }
-    // }
-
-    // public boolean isNewTag(String line) {
-    //     return isIdTag(line) || isTitleTag(line) || isAuthorTag(line) || isBibTag(line) || isBodyTag(line);
-    // }
-
-    // public boolean isIdTag(String line) {
-    //     return line.startsWith(".I");
-    // }
-
-    // public boolean isTitleTag(String line) {
-    //     return line.startsWith(".T");
-    // }
-
-    // public boolean isAuthorTag(String line) {
-    //     return line.startsWith(".A");
-    // }
-
-    // public boolean isBibTag(String line) {
-    //     return line.startsWith(".B");
-    // }
-
-    // public boolean isBodyTag(String line) {
-    //     return line.startsWith(".W");
-    // }
 }
