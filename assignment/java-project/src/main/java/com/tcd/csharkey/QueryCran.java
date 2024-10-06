@@ -76,12 +76,12 @@ public class QueryCran {
         // System.out.println(queryList.size());
 
         File resultsFile = new File(resultsPath + specs.getScoringApproach() + "-res.txt");
-        if (resultsFile.createNewFile()) {
-            System.out.println("File created: " + resultsFile.getName());
-        } 
-        else {
-            System.out.println("File already exists.");
-        }
+        // if (resultsFile.createNewFile()) {
+        //     System.out.println("File created: " + resultsFile.getName());
+        // } 
+        // else {
+        //     System.out.println("File already exists.");
+        // }
 
         FileWriter myWriter = new FileWriter(resultsPath + specs.getScoringApproach() + "-res.txt");
 
