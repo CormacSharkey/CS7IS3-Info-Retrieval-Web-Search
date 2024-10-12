@@ -13,15 +13,20 @@ import org.apache.lucene.search.similarities.BooleanSimilarity;
 import org.apache.lucene.search.similarities.ClassicSimilarity;
 
 // Currently using StandardAnalyzer and BM25Similarity
+//          check if index is being freshly created every time a new result 
 // TODO:    Create a custom analyzer
-// TODO:    Implement multiple scoring similarities (including at least the Vector Space Model and BM25)
+//          Implement multiple scoring similarities (including at least the Vector Space Model and BM25)
 //          Store results of similarity scoring in document for trec eval
 //          Reformat qrels
 //          Run trec eval on each document
 // TODO:    Generate Mean Average Precision and Recall scores based upon the provided relevance judgements using TREC Eval
-// TODO:    "Comment and optimize code"
+//          "Comment code"
+// TODO:    "Optimize code"
 // TODO:    Write report
 
+
+// App class to run the main loop - creates multiple different indexes based on a combination of analyzers and similarity scores
+// Scores tested with trec_eval using bash script "exe.sh"
 public class App {
 
     public static void main(String[] args) throws IOException, ParseException {

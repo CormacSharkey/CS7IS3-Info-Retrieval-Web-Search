@@ -20,18 +20,22 @@ import org.apache.lucene.store.FSDirectory;
 
 public class IndexCran {
 
+    // Vars for the file paths of the cran content file and the index folder
     private static String cranPath = "../cran/cran.all.1400";
     private static String indexPath = "../index";
 
+    // Constructor - takes a QuerySPecs object and indexes the cranfield collection to create an index
     public IndexCran(QuerySpecs specs) throws IOException {
 
         Directory directory = FSDirectory.open(Paths.get(indexPath));
+        // Create an IndexWriterConfig object using the given analyzer
         IndexWriterConfig config = new IndexWriterConfig(specs.getAnalyzer());
 
         config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
 
         IndexWriter iwriter = new IndexWriter(directory, config);
 
+        // Create a reader for the cran content file to parse it
         FileInputStream fstream = new FileInputStream(cranPath);
         BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 
@@ -59,9 +63,12 @@ public class IndexCran {
         Boolean dataFlag = true;
         Boolean firstFlag = true;
 
+        // Create list of documents to store the parsed cran docs
         ArrayList<Document> documentsList = new ArrayList<Document>();
+
         Document document = new Document();
 
+        // Cranfield collection parser - parses each field into a document object and adds a completed document object to the document list
         fileline = br.readLine();
         while ((fileline) != null) {
             if (returnField(fileline) != "X") {
@@ -96,19 +103,22 @@ public class IndexCran {
             fileline = br.readLine();
         }
 
+        // Add the last document body to its document
         document.add(new TextField(currField, data, Field.Store.YES));
+        // Add the last document to the document list
         documentsList.add(document);
 
+        // Write the documents to the index
         iwriter.addDocuments(documentsList);
 
+        // Close all open objects
         iwriter.close();
         directory.close();
         fstream.close();
 
     }
 
-    // method to return the field mapping for a given code in cran.all.1400
-    // returns "X" if no code present
+    // returnField method - returns a field's designated name based on the passed field id, returns "X" if not a field line
     public String returnField(String str) {
         if (str.startsWith(".I")) {
             return "id";
