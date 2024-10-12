@@ -21,8 +21,13 @@ import org.apache.lucene.search.similarities.ClassicSimilarity;
 //          Run trec eval on each document
 // TODO:    Generate Mean Average Precision and Recall scores based upon the provided relevance judgements using TREC Eval
 //          "Comment code"
-// TODO:    "Optimize code"
+//          "Optimize code"
 // TODO:    Write report
+
+// * Questions to ask Professor
+// Can I implement multiple analyzer and scoring combinations and compare them in report?
+// Should I store each individual index separately like wuery reslts, or should I delete and re-create constantly?
+// Do I need to create a custom analyzer or can I stick with the pre-made ones?
 
 
 // App class to run the main loop - creates multiple different indexes based on a combination of analyzers and similarity scores

@@ -57,8 +57,8 @@ public class IndexCran {
                 //add text with whitespace
 
         String fileline;
-        String currField = "id";
-        String prevField = "";
+        // String currField = "id";
+        String prevField = "id";
         String data = "";
         Boolean dataFlag = true;
         Boolean firstFlag = true;
@@ -72,22 +72,21 @@ public class IndexCran {
         fileline = br.readLine();
         while ((fileline) != null) {
             if (returnField(fileline) != "X") {
-                prevField = currField;
-                currField = returnField(fileline);
-
                 if (prevField != "id") {
                     document.add(new TextField(prevField, data, Field.Store.YES));
                 }
-                if (currField == "id") {
+                if (returnField(fileline) == "id") {
                     if (!firstFlag) {
                         document.removeField("bibli");
                         documentsList.add(document);
                     }
                     firstFlag = false;
                     document = new Document();
-                    document.add(new TextField(currField, fileline.substring(3), Field.Store.YES));
+                    document.add(new TextField("id", fileline.substring(3), Field.Store.YES));
                 }
                 dataFlag = true;
+                
+                prevField = returnField(fileline);
             }
             else {
                 if (dataFlag) {
@@ -104,7 +103,7 @@ public class IndexCran {
         }
 
         // Add the last document body to its document
-        document.add(new TextField(currField, data, Field.Store.YES));
+        document.add(new TextField("body", data, Field.Store.YES));
         // Add the last document to the document list
         documentsList.add(document);
 

@@ -28,7 +28,7 @@ public class QueryCran {
     // Vars for the file paths of the cran query file, the created index folder, the query results folder
     private static String cranPath = "../cran/cran.qry";
     private static String indexPath = "../index";
-    private static String resultsPath = "../query-results";
+    private static String resultsPath = "../query-results/";
 
     // Constructor - takes a QuerySpecs object and creates a query results file based on the analyzer and similarity scorer
     public QueryCran(QuerySpecs specs) throws IOException, ParseException{

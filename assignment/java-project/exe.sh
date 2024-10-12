@@ -1,4 +1,4 @@
-echo#!/bin/bash
+#!/bin/bash
 
 echo "Purging for fresh run..."
 rm -rf ../query-results/*
