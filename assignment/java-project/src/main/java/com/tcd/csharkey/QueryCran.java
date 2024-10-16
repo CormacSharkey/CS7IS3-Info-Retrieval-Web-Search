@@ -33,7 +33,12 @@ public class QueryCran {
     // Constructor - takes a QuerySpecs object and creates a query results file based on the analyzer and similarity scorer
     public QueryCran(QuerySpecs specs) throws IOException, ParseException{
 
-        Directory directory = FSDirectory.open(Paths.get(indexPath));
+        String newIndexPath = indexPath + "/" + specs.getScoringApproach();
+
+        System.out.println(indexPath);
+        System.out.println(newIndexPath);
+
+        Directory directory = FSDirectory.open(Paths.get(newIndexPath));
 
         DirectoryReader ireader = DirectoryReader.open(directory);
 		IndexSearcher isearcher = new IndexSearcher(ireader);

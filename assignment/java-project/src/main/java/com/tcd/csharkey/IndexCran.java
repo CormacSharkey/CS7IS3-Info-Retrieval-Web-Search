@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.File;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -24,10 +25,13 @@ public class IndexCran {
     private static String cranPath = "../cran/cran.all.1400";
     private static String indexPath = "../index";
 
-    // Constructor - takes a QuerySPecs object and indexes the cranfield collection to create an index
+    // Constructor - takes a QuerySpecs object and indexes the cranfield collection to create an index
     public IndexCran(QuerySpecs specs) throws IOException {
+        String newIndexPath = indexPath + "/" + specs.getScoringApproach();
 
-        Directory directory = FSDirectory.open(Paths.get(indexPath));
+        Boolean dirStatus = new File(newIndexPath).mkdirs();
+
+        Directory directory = FSDirectory.open(Paths.get(newIndexPath));
         // Create an IndexWriterConfig object using the given analyzer
         IndexWriterConfig config = new IndexWriterConfig(specs.getAnalyzer());
 
@@ -39,25 +43,7 @@ public class IndexCran {
         FileInputStream fstream = new FileInputStream(cranPath);
         BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 
-
-        // if field is an id (.I, .T, .A, .B, .W)
-            // store past and current field
-            // if past field not .I (who has already had their data added to the doc)
-                // add data to doc using prev field
-            // if curr field is .I
-                // if not first .I
-                    // remove "bibli" field
-                    // add doc to doc list
-                // create new doc
-                // add .I data to it
-        // else (must be text line)
-            //if first line of text
-                // add text with no whitespace
-            // else
-                //add text with whitespace
-
         String fileline;
-        // String currField = "id";
         String prevField = "id";
         String data = "";
         Boolean dataFlag = true;

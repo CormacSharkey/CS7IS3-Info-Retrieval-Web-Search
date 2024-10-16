@@ -22,11 +22,11 @@ import org.apache.lucene.search.similarities.ClassicSimilarity;
 // TODO:    Generate Mean Average Precision and Recall scores based upon the provided relevance judgements using TREC Eval
 //          "Comment code"
 //          "Optimize code"
+// TODO:    Figure out what Mean Average Precision and Recall are calculating and what its value means
 // TODO:    Write report
 
 // * Questions to ask Professor
 // Can I implement multiple analyzer and scoring combinations and compare them in report?
-// Should I store each individual index separately like wuery reslts, or should I delete and re-create constantly?
 // Do I need to create a custom analyzer or can I stick with the pre-made ones?
 
 
