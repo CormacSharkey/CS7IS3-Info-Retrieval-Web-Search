@@ -27,8 +27,9 @@ public class IndexCran {
 
     // Constructor - takes a QuerySpecs object and indexes the cranfield collection to create an index
     public IndexCran(QuerySpecs specs) throws IOException {
-        String newIndexPath = indexPath + "/" + specs.getScoringApproach();
 
+        // Create a new index path string for the specific index folder
+        String newIndexPath = indexPath + "/" + specs.getScoringApproach();
         Boolean dirStatus = new File(newIndexPath).mkdirs();
 
         Directory directory = FSDirectory.open(Paths.get(newIndexPath));

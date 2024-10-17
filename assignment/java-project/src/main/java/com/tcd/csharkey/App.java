@@ -12,16 +12,8 @@ import org.apache.lucene.search.similarities.BM25Similarity;
 import org.apache.lucene.search.similarities.BooleanSimilarity;
 import org.apache.lucene.search.similarities.ClassicSimilarity;
 
-// Currently using StandardAnalyzer and BM25Similarity
-//          check if index is being freshly created every time a new result 
 // TODO:    Create a custom analyzer
-//          Implement multiple scoring similarities (including at least the Vector Space Model and BM25)
-//          Store results of similarity scoring in document for trec eval
-//          Reformat qrels
-//          Run trec eval on each document
 // TODO:    Generate Mean Average Precision and Recall scores based upon the provided relevance judgements using TREC Eval
-//          "Comment code"
-//          "Optimize code"
 // TODO:    Figure out what Mean Average Precision and Recall are calculating and what its value means
 // TODO:    Write report
 
