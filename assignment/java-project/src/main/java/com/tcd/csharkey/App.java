@@ -12,16 +12,6 @@ import org.apache.lucene.search.similarities.BM25Similarity;
 import org.apache.lucene.search.similarities.BooleanSimilarity;
 import org.apache.lucene.search.similarities.ClassicSimilarity;
 
-// TODO:    Create a custom analyzer
-// TODO:    Generate Mean Average Precision and Recall scores based upon the provided relevance judgements using TREC Eval
-// TODO:    Figure out what Mean Average Precision and Recall are calculating and what its value means
-// TODO:    Write report
-
-// * Questions to ask Professor
-// Can I implement multiple analyzer and scoring combinations and compare them in report?
-// Do I need to create a custom analyzer or can I stick with the pre-made ones?
-
-
 // App class to run the main loop - creates multiple different indexes based on a combination of analyzers and similarity scores
 // Scores tested with trec_eval using bash script "exe.sh"
 public class App {

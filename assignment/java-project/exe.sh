@@ -12,7 +12,7 @@ echo "Finished execution"
 
 echo "Calling trec_eval on query results..."
 cd /home/csharkey/trec_eval/trec_eval-9.0.7/
-./trec_eval -m runid -m map -m P.5 -m iprec_at_recall.00/home/csharkey/InfoAssignments/CS7IS3-Info-Retrieval-Web-Search/assignment/cran/cranqrel_trec_eval /home/csharkey/InfoAssignments/CS7IS3-Info-Retrieval-Web-Search/assignment/query-results/English-BM25-res.txt
+./trec_eval -m runid -m map -m P.5 -m iprec_at_recall.00 /home/csharkey/InfoAssignments/CS7IS3-Info-Retrieval-Web-Search/assignment/cran/cranqrel_trec_eval /home/csharkey/InfoAssignments/CS7IS3-Info-Retrieval-Web-Search/assignment/query-results/English-BM25-res.txt
 echo
 ./trec_eval -m runid -m map -m P.5 -m iprec_at_recall.00 /home/csharkey/InfoAssignments/CS7IS3-Info-Retrieval-Web-Search/assignment/cran/cranqrel_trec_eval /home/csharkey/InfoAssignments/CS7IS3-Info-Retrieval-Web-Search/assignment/query-results/English-VSM-res.txt
 echo

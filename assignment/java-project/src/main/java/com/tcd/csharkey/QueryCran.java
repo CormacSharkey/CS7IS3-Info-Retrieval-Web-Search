@@ -101,7 +101,8 @@ public class QueryCran {
 
             for (int i = 1; i < hits.length+1; i++) {
                 Document hitDoc = isearcher.storedFields().document(hits[i-1].doc);
-                myWriter.write(counter + " Q0 " + hitDoc.get("id") + " " + i + " " + hits[i-1].score + " " + specs.getScoringApproach() + "\n");
+                myWriter.write(counter + " Q0 " + hitDoc.get("id") + " " + 
+                    i + " " + hits[i-1].score + " " + specs.getScoringApproach() + "\n");
             }
 
             counter += 1;
