@@ -1,5 +1,6 @@
 package com.tcd.csharkey;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.apache.lucene.document.Document;
@@ -11,39 +12,44 @@ public class ParserDocs {
     private String ftPath = ".../data/ft";
     private String latPath = ".../data/latimes";
 
-    private ArrayList<String> FileExtractor(String filePath) {
+    // Might put FileExtractor in CallParsers() instead
+    private ArrayList<String> FileExtractor(String filePath, String code) {
         // Extract the specific files for the specific parser
     }
     
-    private ArrayList<Document> FBISParser(ArrayList<String> fileList) {
+    private ArrayList<Document> FBISParser(String filePath, String code) {
+        ArrayList<String> fileList = FileExtractor(filePath, code);
         // Parse the FBIS dataset
 
     }
 
-    private ArrayList<Document> FRParser(ArrayList<String> fileList) {
+    private ArrayList<Document> FRParser(String filePath, String code) {
+        ArrayList<String> fileList = FileExtractor(filePath, code);
         // Parse the FR dataset
 
     }
 
-    private ArrayList<Document> FTParser(ArrayList<String> fileList) {
+    private ArrayList<Document> FTParser(String filePath, String code) {
+        ArrayList<String> fileList = FileExtractor(filePath, code);
         // Parse the FT dataset
 
     }
 
-    private ArrayList<Document> LATParser(ArrayList<String> fileList) {
+    private ArrayList<Document> LATParser(String filePath, String code) {
+        ArrayList<String> fileList = FileExtractor(filePath, code);
         // Parse the LAT dataset
         
     }
 
     public ArrayList<Document> CallParsers() {
-        ArrayList<String> fileList = FileExtractor();
-
         ArrayList<Document> docList;
 
         docList.addAll(FBISParser(fileList));
         docList.addAll(FRParser(fileList));
         docList.addAll(FTParser(fileList));
         docList.addAll(LATParser(fileList));
+
+        return docList;
 
         // Call the parsers
 

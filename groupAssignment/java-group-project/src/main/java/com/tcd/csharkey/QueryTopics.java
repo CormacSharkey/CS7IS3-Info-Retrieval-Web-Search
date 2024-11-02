@@ -97,7 +97,7 @@ public class QueryTopics {
                 for (int i = 1; i < hits.length+1; i++) {
                     Document hitDoc = isearcher.storedFields().document(hits[i-1].doc);
                     
-                    myWriter.write(queryID.get(counter) + " Q0 " + hitDoc.get("id") + " 0 " + hits[i-1].score + " STANDARD" + "\n");
+                    myWriter.write(queryID.get(counter) + " Q0 " + hitDoc.get("id") + " " + i + " " + hits[i-1].score + " STANDARD" + "\n");
                     counter++;
                 }
             }
