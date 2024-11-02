@@ -81,9 +81,9 @@ public class QueryTopics {
 
             isearcher.setSimilarity(score);
 
-            String queryFields[] = {"body"};
-
-            QueryParser queryParser = new MultiFieldQueryParser(queryFields, analyzer);
+            // String queryFields[] = {"body"};
+            // QueryParser queryParser = new MultiFieldQueryParser(queryFields, analyzer);
+            QueryParser queryParser = new QueryParser("body", analyzer);
 
             File resultsFile = new File(resultsPath + "results.txt");
             FileWriter myWriter = new FileWriter(resultsPath + "results.txt");
@@ -105,8 +105,8 @@ public class QueryTopics {
             myWriter.close();
             System.out.println("Added file: results.txt");
 
-            // ireader.close();
-            // directory.close();
+            ireader.close();
+            directory.close();
         }
         catch (Exception e) {
             System.out.println("Error: " + e);

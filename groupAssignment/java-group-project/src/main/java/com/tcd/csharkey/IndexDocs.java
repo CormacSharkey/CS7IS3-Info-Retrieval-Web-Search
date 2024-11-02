@@ -1,9 +1,13 @@
 package com.tcd.csharkey;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import javax.swing.text.html.HTMLEditorKit.Parser;
 
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
@@ -14,18 +18,31 @@ public class IndexDocs {
     private static String indexPath = "../index";
 
     public void BuildIndex() {
-        IndexWriterConfig config = new IndexWriterConfig();
-        config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
 
-        Directory directory = FSDirectory.open(Paths.get(indexPath));
-        IndexWriter iwriter = new IndexWriter(directory, config);
+        Analyzer analyzer = new EnglishAnalyzer();
 
-        ParserDocs parserDocs = new ParserDocs();
+        try {
+            Directory directory = FSDirectory.open(Paths.get(indexPath));
+    
+            IndexWriterConfig config = new IndexWriterConfig(analyzer);
+            config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
+    
+            IndexWriter iwriter = new IndexWriter(directory, config);
+    
+            ParserDocs parserDocs = new ParserDocs();
+    
+            ArrayList<Document> documentsList = parserDocs.CallParsers();
+            iwriter.addDocuments(documentsList);
 
-        ArrayList<Document> = parserDocs.CallParsers();
+            System.out.println("Added index");
+    
+            iwriter.close();
+            directory.close();
 
-
-
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
 
     }
 }
