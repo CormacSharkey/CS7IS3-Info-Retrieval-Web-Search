@@ -58,7 +58,7 @@ public class QueryTopics {
                 queryID.add(id.split(" ")[1]);
                 query += title.replaceAll("[^a-zA-Z ]", "").toLowerCase();
                 query += description.replace("Description:","").replaceAll("[^a-zA-Z ]", "").toLowerCase();
-                query += narrative.replace("Narrative:","").replaceAll("[^a-zA-Z ]", "").toLowerCase();
+                // query += narrative.replace("Narrative:","").replaceAll("[^a-zA-Z ]", "").toLowerCase();
                 queryList.add(query);
             }   
         }
@@ -81,9 +81,8 @@ public class QueryTopics {
 
             isearcher.setSimilarity(score);
 
-            // String queryFields[] = {"body"};
-            // QueryParser queryParser = new MultiFieldQueryParser(queryFields, analyzer);
-            QueryParser queryParser = new QueryParser("body", analyzer);
+            String queryFields[] = {"body"};
+            QueryParser queryParser = new MultiFieldQueryParser(queryFields, analyzer);
 
             File resultsFile = new File(resultsPath + "results.txt");
             FileWriter myWriter = new FileWriter(resultsPath + "results.txt");
