@@ -3,58 +3,68 @@ package com.tcd.csharkey;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.sound.sampled.SourceDataLine;
+
 import org.apache.lucene.document.Document;
+import org.jsoup.Jsoup;
+import org.jsoup.select.Elements;
 
 public class ParserDocs {
 
-    private String fbisPath = ".../data/fbis";
-    private String frPath = ".../data/fr94";
-    private String ftPath = ".../data/ft";
-    private String latPath = ".../data/latimes";
+    private String fbisPath = "../data/fbis";
+    private String frPath = "../data/fr94";
+    private String ftPath = "../data/ft";
+    private String latPath = "../data/latimes";
 
-    // Might put FileExtractor in CallParsers() instead
-    private ArrayList<String> FileExtractor(String filePath, String code) {
-        // Extract the specific files for the specific parser
-    }
+    // // Might put FileExtractor in CallParsers() instead
+    // private ArrayList<String> FileExtractor(String filePath, String code) {
+    //     // Extract the specific files for the specific parser
+    // }
     
-    private ArrayList<Document> FBISParser(String filePath, String code) {
-        ArrayList<String> fileList = FileExtractor(filePath, code);
-        // Parse the FBIS dataset
+    // private ArrayList<Document> FBISParser(String filePath) {
+    //     // Parse the FBIS dataset
 
-    }
+    // }
 
-    private ArrayList<Document> FRParser(String filePath, String code) {
-        ArrayList<String> fileList = FileExtractor(filePath, code);
-        // Parse the FR dataset
+    // private ArrayList<Document> FRParser(String filePath) {
+    //     // Parse the FR dataset
 
-    }
+    // }
 
-    private ArrayList<Document> FTParser(String filePath, String code) {
-        ArrayList<String> fileList = FileExtractor(filePath, code);
-        // Parse the FT dataset
+    // private ArrayList<Document> FTParser(String filePath) {
+    //     File dir = new File(filePath);
 
-    }
+    //     File[] dirList = dir.listFiles();
 
-    private ArrayList<Document> LATParser(String filePath, String code) {
-        ArrayList<String> fileList = FileExtractor(filePath, code);
-        // Parse the LAT dataset
+    //     for (int i=0; i<dirList.length; i++) {
+    //         System.out.println(dirList[i].getName());
+    //     }
+
+
+    //     // org.jsoup.nodes.Document document = Jsoup.parse(file,"ISO-8859-1");
+    //     // Elements elements = document.getElementsByTag("top");
+
+    // }
+
+    // private ArrayList<Document> LATParser(String filePath) {
+    //     // Parse the LAT dataset
         
-    }
+    // }
 
-    public ArrayList<Document> CallParsers() {
-        ArrayList<Document> docList;
+    // public ArrayList<Document> CallParsers() {
+    //     ArrayList<Document> docList;
 
-        docList.addAll(FBISParser(fileList));
-        docList.addAll(FRParser(fileList));
-        docList.addAll(FTParser(fileList));
-        docList.addAll(LATParser(fileList));
+    //     docList.addAll(FBISParser(fbisPath));
+    //     docList.addAll(FRParser(frPath));
+    //     docList.addAll(FTParser(ftPath));
+    //     docList.addAll(LATParser(latPath));
 
-        return docList;
+    //     return docList;
 
-        // Call the parsers
+    //     // Call the parsers
 
-        // Add the parsers' returned data together
+    //     // Add the parsers' returned data together
 
-        // Return combined data
-    }
+    //     // Return combined data
+    // }
 }

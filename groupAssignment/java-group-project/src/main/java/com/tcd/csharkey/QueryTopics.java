@@ -28,8 +28,8 @@ public class QueryTopics {
 
     private int MAX_RESULTS = 1000;
     private static String queryPath = "../data/topics";
-    private static String indexPath = ".../index";
-    private static String resultsPath = ".../results/";
+    private static String indexPath = "../index";
+    private static String resultsPath = "../results/";
     private ArrayList<String> queryList = new ArrayList<String>();
     private ArrayList<String> queryID = new ArrayList<String>();
 
