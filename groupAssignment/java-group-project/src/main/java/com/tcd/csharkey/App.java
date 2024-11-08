@@ -3,34 +3,24 @@ package com.tcd.csharkey;
 import java.io.File;
 import java.util.ArrayList;
 
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.TextField;
+import org.apache.lucene.document.StringField;
+import org.jsoup.Jsoup;
+import org.jsoup.select.Elements;
+import org.jsoup.nodes.Element;
+
 public class App 
 {
-    public static void main( String[] args )
-    {
-        // QueryTopics queryTopics = new QueryTopics();
-        // queryTopics.CallQueries();
+    public static void main( String[] args ) {
 
-        // Start of parser
-        String frPath = "../data/fr94";
-        File dir = new File(frPath);
-        File[] dirList = dir.listFiles();
+        IndexDocs indexDocs = new IndexDocs();
+        indexDocs.BuildIndex();
 
-        ArrayList<String> fileList = new ArrayList<>();
+        QueryTopics queryTopics = new QueryTopics();
+        queryTopics.CallQueries();
 
-        if (dirList != null) {
-            System.out.println(dirList.length);
-
-            for (int i=0; i<dirList.length; i++) {
-                if (dirList[i].isDirectory()) {
-                    for (File f: dirList[i].listFiles()) {
-                        fileList.add(f.getAbsolutePath());
-                    }
-                }
-            }
-
-            for (String name: fileList) {
-                System.out.println(name);
-            }
-        }
     }
+
 }

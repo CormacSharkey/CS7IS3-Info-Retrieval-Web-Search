@@ -31,8 +31,7 @@ public class IndexDocs {
     
             ParserDocs parserDocs = new ParserDocs();
     
-            // ArrayList<Document> documentsList = parserDocs.CallParsers();
-            ArrayList<Document> documentsList = new ArrayList<>();
+            ArrayList<Document> documentsList = parserDocs.CallParsers();
             iwriter.addDocuments(documentsList);
 
             System.out.println("Added index");
