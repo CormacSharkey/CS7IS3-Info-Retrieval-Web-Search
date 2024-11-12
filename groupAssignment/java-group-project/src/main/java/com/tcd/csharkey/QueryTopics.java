@@ -67,12 +67,12 @@ public class QueryTopics {
         }
     }
 
-    public void CallQueries() {
+    public void CallQueries(Analyzer analyzer, Similarity score) {
         BuildQueries();
 
         try {
-            Analyzer analyzer = new EnglishAnalyzer();
-            Similarity score = new BM25Similarity();
+            // Analyzer analyzer = new EnglishAnalyzer();
+            // Similarity score = new BM25Similarity();
 
             Directory directory = FSDirectory.open(Paths.get(indexPath));
 

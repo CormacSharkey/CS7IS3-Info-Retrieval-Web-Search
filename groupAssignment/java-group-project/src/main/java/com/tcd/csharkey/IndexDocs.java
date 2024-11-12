@@ -17,9 +17,9 @@ public class IndexDocs {
 
     private static String indexPath = "../index";
 
-    public void BuildIndex() {
+    public void BuildIndex(Analyzer analyzer) {
 
-        Analyzer analyzer = new EnglishAnalyzer();
+        // Analyzer analyzer = new EnglishAnalyzer();
 
         try {
             Directory directory = FSDirectory.open(Paths.get(indexPath));
