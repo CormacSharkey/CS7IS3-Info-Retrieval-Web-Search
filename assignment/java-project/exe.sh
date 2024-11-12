@@ -1,8 +1,8 @@
 #!/bin/bash
 
 echo "Purging for fresh run..."
-sudo rm -rf ../query-results/*
-sudo rm -rf ../index/*
+rm -rf ../query-results/*
+rm -rf ../index/*
 echo "Finished purge"
 
 echo "Executing build and run..."
