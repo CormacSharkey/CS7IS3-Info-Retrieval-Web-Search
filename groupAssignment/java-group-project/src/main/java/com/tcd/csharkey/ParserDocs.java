@@ -17,30 +17,30 @@ public class ParserDocs {
     private String ftPath = "../data/ft";
     private String latPath = "../data/latimes";
 
-    // Might put FileExtractor in CallParsers() instead
-    private ArrayList<String> FileExtractor(String filePath, String code) {
-        // Extract the specific files for the specific parser
-    }
+    // // Might put FileExtractor in CallParsers() instead
+    // private ArrayList<String> FileExtractor(String filePath, String code) {
+    //     // Extract the specific files for the specific parser
+    // }
     
     private ArrayList<Document> FBISParser(String filePath) {
         File dir = new File(filePath);
-        File[] dirList = dir.listFiles();
+        File[] fileList = dir.listFiles();
 
-        ArrayList<String> fileList = new ArrayList<>();
+        // ArrayList<String> fileList = new ArrayList<>();
 
-        if (dirList != null) {
-            System.out.println(dirList.length);
+        // if (dirList != null) {
+        //     System.out.println(dirList.length);
 
-            for (int i=0; i<dirList.length; i++) {
-                if (dirList[i].isDirectory()) {
-                    for (File f: dirList[i].listFiles()) {
-                        fileList.add(f.getAbsolutePath());
-                    }
-                }
-            }
-        }
+        //     for (int i=0; i<dirList.length; i++) {
+        //         if (dirList[i].isDirectory()) {
+        //             for (File f: dirList[i].listFiles()) {
+        //                 fileList.add(f.getAbsolutePath());
+        //             }
+        //         }
+        //     }
+        // }
 
-        File file;
+        // File file;
         org.jsoup.nodes.Document document;
         Elements elements;
 
@@ -53,31 +53,33 @@ public class ParserDocs {
         Document doc = new Document();
 
         try {
-            for (String name: fileList) {
-                file = new File(name);
-                document = Jsoup.parse(file,"ISO-8859-1");
-                elements = document.getElementsByTag("DOC");
-                System.out.println(name);
+            for (File file: fileList) {
+                if (file.getName().startsWith("fb")) {
+                    // file = new File(name);
+                    document = Jsoup.parse(file,"ISO-8859-1");
+                    elements = document.getElementsByTag("DOC");
+                    // System.out.println(file.getName());
 
-                for (Element el: elements) {
-                    id = el.getElementsByTag("DOCNO").text();
-                    doc.add(new TextField("id", id, Field.Store.YES));
+                    for (Element el: elements) {
+                        id = el.getElementsByTag("DOCNO").text();
+                        doc.add(new TextField("id", id, Field.Store.YES));
 
-                    // title = el.getElementsByTag("HEADLINE").text().split("/")[1].replaceAll("[^a-zA-Z ]", "").toLowerCase();
-                    title = el.getElementsByTag("TI").text().replaceAll("[^a-zA-Z ]", "").toLowerCase();
-                    doc.add(new TextField("title", title, Field.Store.YES));
+                        // title = el.getElementsByTag("HEADLINE").text().split("/")[1].replaceAll("[^a-zA-Z ]", "").toLowerCase();
+                        title = el.getElementsByTag("TI").text().replaceAll("[^a-zA-Z ]", "").toLowerCase();
+                        doc.add(new TextField("title", title, Field.Store.YES));
 
-                    author = el.getElementsByTag("AU").text().replaceAll("[^a-zA-Z ]", "").toLowerCase();
-                    doc.add(new TextField("author", author, Field.Store.YES));
+                        author = el.getElementsByTag("AU").text().replaceAll("[^a-zA-Z ]", "").toLowerCase();
+                        doc.add(new TextField("author", author, Field.Store.YES));
 
-                    System.out.println(author);
+                        body = el.getElementsByTag("TEXT").text().replaceAll("[^a-zA-Z ]", "").toLowerCase();
+                        doc.add(new TextField("body", body, Field.Store.YES));
 
-                    body = el.getElementsByTag("TEXT").text().replaceAll("[^a-zA-Z ]", "").toLowerCase();
-                    doc.add(new TextField("body", body, Field.Store.YES));
+                        System.out.println(title);
 
-                    documentsList.add(doc);
+                        documentsList.add(doc);
 
-                    doc = new Document();
+                        doc = new Document();
+                    }
                 }
 
             }
@@ -87,7 +89,6 @@ public class ParserDocs {
         }
 
         return documentsList;
-
     }
 
     private ArrayList<Document> FRParser(String filePath) {
