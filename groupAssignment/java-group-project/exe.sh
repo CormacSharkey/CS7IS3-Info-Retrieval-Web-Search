@@ -12,4 +12,4 @@ echo "Finished execution"
 
 echo "Calling trec_eval on query results..."
 cd ../trec_eval-9.0.7/
-./trec_eval -m runid -m map <insert qrel file path here> <insert query results file path here>
+./trec_eval -m runid -m map ../data/qrels.assignment2.part1 <insert query results file path here>
