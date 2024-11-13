@@ -23,7 +23,70 @@ public class ParserDocs {
     }
     
     private ArrayList<Document> FBISParser(String filePath) {
-        // Parse the FBIS dataset
+        File dir = new File(filePath);
+        File[] dirList = dir.listFiles();
+
+        ArrayList<String> fileList = new ArrayList<>();
+
+        if (dirList != null) {
+            System.out.println(dirList.length);
+
+            for (int i=0; i<dirList.length; i++) {
+                if (dirList[i].isDirectory()) {
+                    for (File f: dirList[i].listFiles()) {
+                        fileList.add(f.getAbsolutePath());
+                    }
+                }
+            }
+        }
+
+        File file;
+        org.jsoup.nodes.Document document;
+        Elements elements;
+
+        String id;
+        String title;
+        String author;
+        String body;
+
+        ArrayList<Document> documentsList = new ArrayList<Document>();
+        Document doc = new Document();
+
+        try {
+            for (String name: fileList) {
+                file = new File(name);
+                document = Jsoup.parse(file,"ISO-8859-1");
+                elements = document.getElementsByTag("DOC");
+                System.out.println(name);
+
+                for (Element el: elements) {
+                    id = el.getElementsByTag("DOCNO").text();
+                    doc.add(new TextField("id", id, Field.Store.YES));
+
+                    // title = el.getElementsByTag("HEADLINE").text().split("/")[1].replaceAll("[^a-zA-Z ]", "").toLowerCase();
+                    title = el.getElementsByTag("TI").text().replaceAll("[^a-zA-Z ]", "").toLowerCase();
+                    doc.add(new TextField("title", title, Field.Store.YES));
+
+                    author = el.getElementsByTag("AU").text().replaceAll("[^a-zA-Z ]", "").toLowerCase();
+                    doc.add(new TextField("author", author, Field.Store.YES));
+
+                    System.out.println(author);
+
+                    body = el.getElementsByTag("TEXT").text().replaceAll("[^a-zA-Z ]", "").toLowerCase();
+                    doc.add(new TextField("body", body, Field.Store.YES));
+
+                    documentsList.add(doc);
+
+                    doc = new Document();
+                }
+
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+        return documentsList;
 
     }
 
