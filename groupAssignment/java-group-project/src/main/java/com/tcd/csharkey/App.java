@@ -15,6 +15,7 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.search.similarities.BM25Similarity;
+import org.apache.lucene.search.similarities.BooleanSimilarity;
 import org.apache.lucene.search.similarities.Similarity;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -25,10 +26,14 @@ public class App
     public static void main( String[] args ) {
 
         Analyzer analyzer = new EnglishAnalyzer();
+        // Similarity score = new BooleanSimilarity();
         Similarity score = new BM25Similarity();
 
         IndexDocs indexDocs = new IndexDocs();
-        indexDocs.BuildIndex(analyzer);
+        indexDocs.BuildIndex(analyzer, "fbis");
+        indexDocs.BuildIndex(analyzer, "fr");
+        indexDocs.BuildIndex(analyzer, "ft");
+        indexDocs.BuildIndex(analyzer, "lat");
 
         QueryTopics queryTopics = new QueryTopics();
         queryTopics.CallQueries(analyzer, score);

@@ -81,28 +81,38 @@ public class QueryTopics {
 
             isearcher.setSimilarity(score);
 
-            String queryFields[] = {"body"};
+            // System.out.println(isearcher.getIndexReader().numDocs());
+
+            String queryFields[] = {"title", "author", "body"};
             QueryParser queryParser = new MultiFieldQueryParser(queryFields, analyzer);
 
             File resultsFile = new File(resultsPath + "results.txt");
             FileWriter myWriter = new FileWriter(resultsPath + "results.txt");
 
+            int counter = 0;
+            
             for (String queryBase: queryList) {
                 Query query = queryParser.parse(queryParser.escape(queryBase));
 
                 ScoreDoc[] hits = isearcher.search(query, MAX_RESULTS).scoreDocs;
 
                 // System.out.println(hits.length);
+                // System.out.println(hits[50].doc);
 
+                for (int i = 1; i < hits.length+1; i++) {
+                    // System.out.println(hits.length);
+                    // System.out.println(i-1);
+                    // System.out.println("a");
 
-                int counter = 0;
-                for (int i = 1; i < hits.length; i++) {
                     // System.out.println(i);
                     Document hitDoc = isearcher.storedFields().document(hits[i-1].doc);
+                    // System.out.println("b");
                     
                     myWriter.write(queryID.get(counter) + " Q0 " + hitDoc.get("id") + " " + i + " " + hits[i-1].score + " STANDARD" + "\n");
-                    counter++;
+                    // System.out.println("c");
+                    // counter++;
                 }
+                counter++;
             }
 
             myWriter.close();

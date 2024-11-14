@@ -17,7 +17,7 @@ public class IndexDocs {
 
     private static String indexPath = "../index";
 
-    public void BuildIndex(Analyzer analyzer) {
+    public void BuildIndex(Analyzer analyzer, String code) {
 
         // Analyzer analyzer = new EnglishAnalyzer();
 
@@ -25,7 +25,12 @@ public class IndexDocs {
             Directory directory = FSDirectory.open(Paths.get(indexPath));
     
             IndexWriterConfig config = new IndexWriterConfig(analyzer);
+            if (code == "fbis") {
             config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
+            }
+            else {
+            config.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+            }
     
             IndexWriter iwriter = new IndexWriter(directory, config);
     
@@ -33,21 +38,29 @@ public class IndexDocs {
             
             ArrayList<Document> documentsList = new ArrayList<>();
 
-            documentsList = parserDocs.CallParsers("fbis");
-            iwriter.addDocuments(documentsList);
+            if (code == "fbis") {
+                documentsList = parserDocs.CallParsers(code);
+                iwriter.addDocuments(documentsList);
+            }
+            else if (code == "fr") {
+                documentsList = parserDocs.CallParsers(code);
+                iwriter.addDocuments(documentsList);
+            }
+            else if (code == "ft") {
+                documentsList = parserDocs.CallParsers(code);
+                iwriter.addDocuments(documentsList);
+            }
 
-            documentsList = parserDocs.CallParsers("fr");
-            iwriter.addDocuments(documentsList);
+            else if (code == "lat") {
+                documentsList = parserDocs.CallParsers(code);
+                iwriter.addDocuments(documentsList);
+            }
 
-            documentsList = parserDocs.CallParsers("ft");
-            iwriter.addDocuments(documentsList);
-
-            documentsList = parserDocs.CallParsers("lat");
-            iwriter.addDocuments(documentsList);
-
-            System.out.println("Added index");
+            System.out.println("Added " + code + " index");
     
-            iwriter.close();
+            // iwriter.optimize();
+            iwriter.commit();
+            iwriter.close(); 
             directory.close();
 
         }
