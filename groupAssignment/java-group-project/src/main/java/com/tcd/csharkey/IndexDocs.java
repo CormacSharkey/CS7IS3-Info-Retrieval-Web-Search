@@ -32,7 +32,17 @@ public class IndexDocs {
             ParserDocs parserDocs = new ParserDocs();
             
             ArrayList<Document> documentsList = new ArrayList<>();
-            // ArrayList<Document> documentsList = parserDocs.CallParsers();
+
+            documentsList = parserDocs.CallParsers("fbis");
+            iwriter.addDocuments(documentsList);
+
+            documentsList = parserDocs.CallParsers("fr");
+            iwriter.addDocuments(documentsList);
+
+            documentsList = parserDocs.CallParsers("ft");
+            iwriter.addDocuments(documentsList);
+
+            documentsList = parserDocs.CallParsers("lat");
             iwriter.addDocuments(documentsList);
 
             System.out.println("Added index");

@@ -92,8 +92,12 @@ public class QueryTopics {
 
                 ScoreDoc[] hits = isearcher.search(query, MAX_RESULTS).scoreDocs;
 
+                // System.out.println(hits.length);
+
+
                 int counter = 0;
-                for (int i = 1; i < hits.length+1; i++) {
+                for (int i = 1; i < hits.length; i++) {
+                    // System.out.println(i);
                     Document hitDoc = isearcher.storedFields().document(hits[i-1].doc);
                     
                     myWriter.write(queryID.get(counter) + " Q0 " + hitDoc.get("id") + " " + i + " " + hits[i-1].score + " STANDARD" + "\n");
@@ -108,7 +112,7 @@ public class QueryTopics {
             directory.close();
         }
         catch (Exception e) {
-            System.out.println("Error: " + e);
+            System.out.println("Error in QueryTopics: " + e);
         }
     }    
 }
