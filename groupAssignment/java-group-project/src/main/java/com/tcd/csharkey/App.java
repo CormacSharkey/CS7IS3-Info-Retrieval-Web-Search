@@ -29,14 +29,14 @@ public class App
         // Similarity score = new BooleanSimilarity();
         Similarity score = new BM25Similarity();
 
-        IndexDocs indexDocs = new IndexDocs();
-        indexDocs.BuildIndex(analyzer, "fbis");
-        indexDocs.BuildIndex(analyzer, "fr");
-        indexDocs.BuildIndex(analyzer, "ft");
-        indexDocs.BuildIndex(analyzer, "lat");
+        // IndexDocs indexDocs = new IndexDocs();
+        // indexDocs.BuildIndex(analyzer, "fbis");
+        // indexDocs.BuildIndex(analyzer, "fr");
+        // indexDocs.BuildIndex(analyzer, "ft");
+        // indexDocs.BuildIndex(analyzer, "lat");
 
-        QueryTopics queryTopics = new QueryTopics();
-        queryTopics.CallQueries(analyzer, score);
+        // QueryTopics queryTopics = new QueryTopics();
+        // queryTopics.CallQueries(analyzer, score);
 
     }
 
