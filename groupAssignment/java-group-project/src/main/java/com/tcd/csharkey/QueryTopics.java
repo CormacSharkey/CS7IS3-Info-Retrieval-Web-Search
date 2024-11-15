@@ -57,9 +57,17 @@ public class QueryTopics {
 
                 queryID.add(id.split(" ")[1]);
                 query += title.replaceAll("[^a-zA-Z ]", "").toLowerCase();
+                query += " ";
+                query += title.replaceAll("[^a-zA-Z ]", "").toLowerCase();
+
                 query += description.replace("Description:","").replaceAll("[^a-zA-Z ]", "").toLowerCase();
-                // query += narrative.replace("Narrative:","").replaceAll("[^a-zA-Z ]", "").toLowerCase();
+                query += " ";
+                query += description.replace("Description:","").replaceAll("[^a-zA-Z ]", "").toLowerCase();
+                
+                query += " ";
+                query += narrative.replace("Narrative:","").replaceAll("[^a-zA-Z ]", "").toLowerCase();
                 queryList.add(query);
+                query = "";
             }   
         }
         catch (Exception e) {
@@ -83,7 +91,7 @@ public class QueryTopics {
 
             // System.out.println(isearcher.getIndexReader().numDocs());
 
-            String queryFields[] = {"title", "author", "body"};
+            String queryFields[] = {"body"};
             QueryParser queryParser = new MultiFieldQueryParser(queryFields, analyzer);
 
             File resultsFile = new File(resultsPath + "results.txt");
@@ -108,7 +116,7 @@ public class QueryTopics {
                     Document hitDoc = isearcher.storedFields().document(hits[i-1].doc);
                     // System.out.println("b");
                     
-                    myWriter.write(queryID.get(counter) + " Q0 " + hitDoc.get("id") + " " + i + " " + hits[i-1].score + " STANDARD" + "\n");
+                    myWriter.write(queryID.get(counter) + " Q0 " + hitDoc.get("id") + " " + i + " " + hits[i-1].score + " ENGLISHANALYZERBM25" + "\n");
                     // System.out.println("c");
                     // counter++;
                 }
