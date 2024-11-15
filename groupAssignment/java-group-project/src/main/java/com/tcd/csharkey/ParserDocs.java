@@ -4,17 +4,28 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
 import org.jsoup.nodes.Element;
+
+
+// ADD INDIVIDUAL DOC INDEX WRITING TO EACH PARSER
+
+
 
 public class ParserDocs {
 
@@ -23,7 +34,7 @@ public class ParserDocs {
     private String ftPath = "../data/ft";
     private String latPath = "../data/latimes";
     
-    private ArrayList<Document> FBISParser(String filePath) {
+    private ArrayList<Document> FBISParser(String filePath, Analyzer analyzer) {
         File dir = new File(filePath);
         File[] fileList = dir.listFiles();
 
@@ -53,6 +64,12 @@ public class ParserDocs {
         ArrayList<Document> documentsList = new ArrayList<Document>();
         Document doc = new Document();
 
+        // String indexPath = "../index";
+        // Directory directory = FSDirectory.open(Paths.get(indexPath));
+        // IndexWriterConfig config = new IndexWriterConfig(analyzer);
+        // config.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+        // IndexWriter iwriter;
+
         try {
             for (File file: fileList) {
                 if (file.getName().startsWith("fb")) {
@@ -75,12 +92,25 @@ public class ParserDocs {
                         body = el.getElementsByTag("TEXT").text().replaceAll("[^a-zA-Z ]", "").toLowerCase();
                         doc.add(new TextField("body", body, Field.Store.YES));
 
+                        // writeToIndex(doc, analyzer);
+
                         // System.out.println(title);
+
+                        // iwriter = new IndexWriter(directory, config);
+                        // iwriter.addDocument(doc);
 
                         documentsList.add(doc);
 
+                        // iwriter.commit();
+                        // iwriter.close(); 
+                        // directory.close();
+
                         doc = new Document();
                     }
+
+                    writeToIndex(documentsList, analyzer);
+                    documentsList = new ArrayList<>();
+
                 }
 
             }
@@ -92,7 +122,7 @@ public class ParserDocs {
         return documentsList;
     }
 
-    private ArrayList<Document> FRParser(String filePath) {
+    private ArrayList<Document> FRParser(String filePath, Analyzer analyzer) {
         File dir = new File(filePath);
         File[] dirList = dir.listFiles();
 
@@ -147,8 +177,13 @@ public class ParserDocs {
 
                     documentsList.add(doc);
 
+                    // writeToIndex(doc, analyzer);
+
                     doc = new Document();
                 }
+
+                writeToIndex(documentsList, analyzer);
+                documentsList = new ArrayList<>();
     
             }
         }
@@ -160,7 +195,7 @@ public class ParserDocs {
 
     }
 
-    private ArrayList<Document> FTParser(String filePath) {
+    private ArrayList<Document> FTParser(String filePath, Analyzer analyzer) {
         File dir = new File(filePath);
         File[] dirList = dir.listFiles();
 
@@ -215,8 +250,13 @@ public class ParserDocs {
 
                     documentsList.add(doc);
 
+                    // writeToIndex(doc, analyzer);
+
                     doc = new Document();
                 }
+
+                writeToIndex(documentsList, analyzer);
+                documentsList = new ArrayList<>();
     
             }
         }
@@ -228,7 +268,7 @@ public class ParserDocs {
 
     }
 
-    private ArrayList<Document> LATParser(String filePath) {
+    private ArrayList<Document> LATParser(String filePath, Analyzer analyzer) {
         File dir = new File(latPath);
         File[] fileList = dir.listFiles();
 
@@ -279,6 +319,8 @@ public class ParserDocs {
 
                         docList.add(doc);
 
+                        // writeToIndex(doc, analyzer);
+
                         doc = new Document();
 
 
@@ -323,13 +365,16 @@ public class ParserDocs {
         //                 docList.add(doc);
         //             }
                     }
+
+                    writeToIndex(docList, analyzer);
+                    docList = new ArrayList<>();
+
                 }   
             }
         }    
         catch (IOException e) {
             e.printStackTrace();
         }
-        
 
         return docList;
         
@@ -350,23 +395,42 @@ public class ParserDocs {
     //     return "";  // if the tag content is not found
     // }
 
-    public ArrayList<Document> CallParsers(String code) {
+    private void writeToIndex(ArrayList<Document> docList, Analyzer analyzer) {
+        try {
+            String indexPath = "../index";
+            Directory directory = FSDirectory.open(Paths.get(indexPath));
+            IndexWriterConfig config = new IndexWriterConfig(analyzer);
+            config.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+            IndexWriter iwriter = new IndexWriter(directory, config);
+
+            iwriter.addDocuments(docList);
+
+            iwriter.commit();
+            iwriter.close(); 
+            directory.close();
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+
+    public ArrayList<Document> CallParsers(String code, Analyzer analyzer) {
         ArrayList<Document> docList = new ArrayList<Document>();
         
         if (code == "fbis") {
-            docList.addAll(FBISParser(fbisPath));
+            docList.addAll(FBISParser(fbisPath, analyzer));
             System.out.println("Finished FBIS");
         }
         else if (code == "fr") {
-            docList.addAll(FRParser(frPath));
+            docList.addAll(FRParser(frPath, analyzer));
             System.out.println("Finished FR");
         }
         else if (code == "ft") {
-            docList.addAll(FTParser(ftPath));
+            docList.addAll(FTParser(ftPath, analyzer));
             System.out.println("Finished FT");
         }
         else if (code == "lat") {
-            docList.addAll(LATParser(latPath));
+            docList.addAll(LATParser(latPath, analyzer));
             System.out.println("Finished LAT");
         }
 
