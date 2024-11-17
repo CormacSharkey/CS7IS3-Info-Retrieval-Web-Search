@@ -12,14 +12,12 @@ import org.jsoup.nodes.Element;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.similarities.BM25Similarity;
 import org.apache.lucene.search.similarities.Similarity;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.document.Document;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.QueryParser;
@@ -79,8 +77,6 @@ public class QueryTopics {
         BuildQueries();
 
         try {
-            // Analyzer analyzer = new EnglishAnalyzer();
-            // Similarity score = new BM25Similarity();
 
             Directory directory = FSDirectory.open(Paths.get(indexPath));
 
@@ -88,8 +84,6 @@ public class QueryTopics {
             IndexSearcher isearcher = new IndexSearcher(ireader);
 
             isearcher.setSimilarity(score);
-
-            // System.out.println(isearcher.getIndexReader().numDocs());
 
             String queryFields[] = {"body"};
             QueryParser queryParser = new MultiFieldQueryParser(queryFields, analyzer);
@@ -104,21 +98,10 @@ public class QueryTopics {
 
                 ScoreDoc[] hits = isearcher.search(query, MAX_RESULTS).scoreDocs;
 
-                // System.out.println(hits.length);
-                // System.out.println(hits[50].doc);
-
                 for (int i = 1; i < hits.length+1; i++) {
-                    // System.out.println(hits.length);
-                    // System.out.println(i-1);
-                    // System.out.println("a");
-
-                    // System.out.println(i);
                     Document hitDoc = isearcher.storedFields().document(hits[i-1].doc);
-                    // System.out.println("b");
                     
                     myWriter.write(queryID.get(counter) + " Q0 " + hitDoc.get("id") + " " + i + " " + hits[i-1].score + " EnglishAnalyzerBM25" + "\n");
-                    // System.out.println("c");
-                    // counter++;
                 }
                 counter++;
             }
