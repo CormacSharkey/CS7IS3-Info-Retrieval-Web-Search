@@ -13,3 +13,8 @@ echo "Finished execution"
 echo "Calling trec_eval on query results..."
 cd ../trec_eval-9.0.7/
 ./trec_eval -m runid -m map ../data/qrels.assignment2.part1 ../results/results.txt
+
+echo "Purging index to allow git workflow..."
+rm -rf ../index/*
+echo "Finished index purge"
+
