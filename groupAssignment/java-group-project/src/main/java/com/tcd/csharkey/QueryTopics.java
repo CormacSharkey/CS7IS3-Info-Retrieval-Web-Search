@@ -19,8 +19,6 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.document.Document;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.synonym.WordnetSynonymParser;
-import org.apache.lucene.analysis.synonym.word2vec.Word2VecSynonymProvider;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.QueryParser;
@@ -81,16 +79,6 @@ public class QueryTopics {
                 query += narrative.replace("Narrative:","").replaceAll("[^a-zA-Z ]", "").toLowerCase();
                 query += " ";
 
-                // query += title.replaceAll("[^a-zA-Z ]", "").toLowerCase();
-                // query += " ";
-                // query += description.replace("Description:","").replaceAll("[^a-zA-Z ]", "").toLowerCase();
-                // query += " ";
-                // query += narrative.replace("Narrative:","").replaceAll("[^a-zA-Z ]", "").toLowerCase();
-                // query += " ";
-                // query += title.replaceAll("[^a-zA-Z ]", "").toLowerCase();
-                // query += " ";
-                // query += description.replace("Description:","").replaceAll("[^a-zA-Z ]", "").toLowerCase();
-                
                 queryList.add(query);
                 query = "";
             }   
@@ -121,9 +109,6 @@ public class QueryTopics {
             String queryFields[] = {"body"};
             QueryParser queryParser = new MultiFieldQueryParser(queryFields, analyzer);
             
-            // queryParser.setAutoGenerateMultiTermSynonymsPhraseQuery(true);
-            // queryParser.setAllowLeadingWildcard(true);
-
             // Create a results file
             File resultsFile = new File(resultsPath + "results.txt");
             FileWriter myWriter = new FileWriter(resultsPath + "results.txt");
@@ -139,7 +124,7 @@ public class QueryTopics {
                 for (int i = 1; i < hits.length+1; i++) {
                     Document hitDoc = isearcher.storedFields().document(hits[i-1].doc);
                     
-                    myWriter.write(queryID.get(counter) + " Q0 " + hitDoc.get("id") + " " + i + " " + hits[i-1].score + " EnglishAnalyzerLMJM" + "\n");
+                    myWriter.write(queryID.get(counter) + " Q0 " + hitDoc.get("id") + " " + i + " " + hits[i-1].score + " CustomAnalyzerLMJM" + "\n");
                 }
                 counter++;
             }
