@@ -293,23 +293,41 @@ public class ParseIndexDocs {
             config.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
             IndexWriter iwriter = new IndexWriter(directory, config);
 
+            Thread t1 = new Thread(new Runnable(){public void run(){FBISParser(fbisPath, analyzer, iwriter);
+                System.out.println("Added index: FBIS");}});
+            Thread t2 = new Thread(new Runnable(){public void run(){FRParser(frPath, analyzer, iwriter);
+                System.out.println("Added index: FR");}});
+            Thread t3 = new Thread(new Runnable(){public void run(){FTParser(ftPath, analyzer, iwriter);
+                System.out.println("Added index: FT");}});
+            Thread t4 = new Thread(new Runnable(){public void run(){LATParser(latPath, analyzer, iwriter);
+                System.out.println("Added index: LAT");}});
+            t1.start();
+            t2.start();
+            t3.start();
+            t4.start();
+
+            t1.join();
+            t2.join();
+            t3.join();
+            t4.join();
+
             // Check what the document code is, and the appropriate parser to match the code
-            if (code == "fbis") {
-                FBISParser(fbisPath, analyzer, iwriter);
-                System.out.println("Added index: FBIS");
-            }
-            else if (code == "fr") {
-                FRParser(frPath, analyzer, iwriter);
-                System.out.println("Added index: FR");
-            }
-            else if (code == "ft") {
-                FTParser(ftPath, analyzer, iwriter);
-                System.out.println("Added index: FT");
-            }
-            else if (code == "lat") {
-                LATParser(latPath, analyzer, iwriter);
-                System.out.println("Added index: LAT");
-            }
+            // if (code == "fbis") {
+            //     FBISParser(fbisPath, analyzer, iwriter);
+            //     System.out.println("Added index: FBIS");
+            // }
+            // else if (code == "fr") {
+            //     FRParser(frPath, analyzer, iwriter);
+            //     System.out.println("Added index: FR");
+            // }
+            // else if (code == "ft") {
+            //     FTParser(ftPath, analyzer, iwriter);
+            //     System.out.println("Added index: FT");
+            // }
+            // else if (code == "lat") {
+            //     LATParser(latPath, analyzer, iwriter);
+            //     System.out.println("Added index: LAT");
+            // }
 
             // iwriter.addDocuments(docList);
 
