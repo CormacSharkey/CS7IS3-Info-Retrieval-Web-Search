@@ -7,9 +7,7 @@ import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
-import org.tartarus.snowball.ext.EnglishStemmer;
 import org.jsoup.nodes.Element;
-import org.apache.lucene.search.BoostQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
