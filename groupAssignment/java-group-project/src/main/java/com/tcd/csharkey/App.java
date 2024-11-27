@@ -7,15 +7,14 @@ import java.nio.file.Paths;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.custom.CustomAnalyzer;
 import org.apache.lucene.search.similarities.LMJelinekMercerSimilarity;
-import org.apache.lucene.search.similarities.MultiSimilarity;
 import org.apache.lucene.search.similarities.Similarity;
 
 public class App 
 {
     public static void main( String[] args ) throws IOException{
-        final long startTime = System.currentTimeMillis();
+        // final long startTime = System.currentTimeMillis();
 
-        // Specify the analyzer
+        // Create a custom analyser
         Path resources = Paths.get("../data/");
         Analyzer analyzer = CustomAnalyzer.builder(resources)
             .withTokenizer("standard")
@@ -26,13 +25,12 @@ public class App
             .build();
 
         // Specify the similarity scorer with a tweaked lambda value
-        Similarity[] scores = {new LMJelinekMercerSimilarity(0.63f)};
-        Similarity score = new MultiSimilarity(scores);
+        Similarity score = new LMJelinekMercerSimilarity(0.63f);
 
         // Create a ParseIndexDocs object
         ParseIndexDocs parserIndexer = new ParseIndexDocs();
 
-        // Pass the document code and analzyer to the object to parse each document and add it to the index
+        // Pass the analzyer to the object to parse each document and add it to the index
         parserIndexer.CallParsers(analyzer);
 
         // Create a QueryTopics Object
@@ -41,8 +39,8 @@ public class App
         // Pass the analyzer and similarity scorer to the object to parse the queries and query the index
         queryTopics.CallQueries(analyzer, score);
 
-        final long endTime = System.currentTimeMillis();
+        // final long endTime = System.currentTimeMillis();
 
-        System.out.println("Total execution time: " + (endTime - startTime));   
+        // System.out.println("Total execution time: " + (endTime - startTime));   
     }
 }
