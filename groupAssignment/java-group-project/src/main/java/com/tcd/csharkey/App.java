@@ -33,7 +33,7 @@ public class App
         ParseIndexDocs parserIndexer = new ParseIndexDocs();
 
         // Pass the document code and analzyer to the object to parse each document and add it to the index
-        parserIndexer.CallParsers("fbis", analyzer);
+        parserIndexer.CallParsers(analyzer);
 
         // Create a QueryTopics Object
         QueryTopics queryTopics = new QueryTopics();

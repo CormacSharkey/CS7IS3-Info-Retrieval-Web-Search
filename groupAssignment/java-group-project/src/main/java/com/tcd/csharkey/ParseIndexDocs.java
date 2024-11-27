@@ -27,7 +27,7 @@ public class ParseIndexDocs {
     // Specify the file path to the index
     String indexPath = "../index";
     
-    // Method to parse the FBIS document collection - given the document collection file path, the analyzer and the index writer
+    // Method to parse the FBIS document collection into an index - given the document collection file path, the analyzer and the index writer
     public void FBISParser(String filePath, Analyzer analyzer, IndexWriter iwriter) {
         // Get a list of all files in the root file collection directory
         File dir = new File(filePath);
@@ -67,7 +67,6 @@ public class ParseIndexDocs {
 
                         doc = new Document();
                     }
-                    // writeToIndex(documentsList, analyzer);
                     iwriter.addDocuments(documentsList);
                     documentsList = new ArrayList<>();
                 }
@@ -79,7 +78,7 @@ public class ParseIndexDocs {
         }
     }
 
-    // Method to parse the FR document collection - given the document collection file path, the analyzer and the index writer
+    // Method to parse the FR document collection into an index - given the document collection file path, the analyzer and the index writer
     public void FRParser(String filePath, Analyzer analyzer, IndexWriter iwriter) {
         // Get a list of all folders in the root file collection directory
         File dir = new File(filePath);
@@ -135,7 +134,6 @@ public class ParseIndexDocs {
 
                     doc = new Document();
                 }
-                // writeToIndex(documentsList, analyzer);
                 iwriter.addDocuments(documentsList);
                 documentsList = new ArrayList<>();
             }
@@ -146,7 +144,7 @@ public class ParseIndexDocs {
         }
     }
 
-    // Method to parse the FT document collection - given the document collection file path, the analyzer and the index writer
+    // Method to parse the FT document collection into an index - given the document collection file path, the analyzer and the index writer
     public void FTParser(String filePath, Analyzer analyzer, IndexWriter iwriter) {
         // Get a list of all files in the root file collection directory
         File dir = new File(filePath);
@@ -201,7 +199,6 @@ public class ParseIndexDocs {
 
                     doc = new Document();
                 }
-                // writeToIndex(documentsList, analyzer);
                 iwriter.addDocuments(documentsList);
                 documentsList = new ArrayList<>();
             }
@@ -212,7 +209,7 @@ public class ParseIndexDocs {
         }
     }
 
-    // Method to parse the LAT document collection - given the document collection file path, the analyzer and the index writer
+    // Method to parse the LAT document collection into an index - given the document collection file path, the analyzer and the index writer
     public void LATParser(String filePath, Analyzer analyzer, IndexWriter iwriter) {
         // Get a list of all folders in the root file collection directory
         File dir = new File(latPath);
@@ -252,7 +249,6 @@ public class ParseIndexDocs {
 
                         doc = new Document();
                     }
-                    // writeToIndex(docList, analyzer);
                     iwriter.addDocuments(docList);
                     docList = new ArrayList<>();
                 }   
@@ -264,26 +260,8 @@ public class ParseIndexDocs {
         }
     }
 
-    // private void writeToIndex(ArrayList<Document> docList, Analyzer analyzer) {
-    //     try {
-    //         Directory directory = FSDirectory.open(Paths.get(indexPath));
-    //         IndexWriterConfig config = new IndexWriterConfig(analyzer);
-    //         config.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
-    //         IndexWriter iwriter = new IndexWriter(directory, config);
-
-    //         iwriter.addDocuments(docList);
-
-    //         iwriter.commit();
-    //         iwriter.close(); 
-    //         directory.close();
-    //     }
-    //     catch (Exception e) {
-    //         System.out.println("Error: " + e);
-    //     }
-    // }
-
-    // Method to call each parse method above and create an index from each returned document list
-    public void CallParsers(String code, Analyzer analyzer) {
+    // Method to call each parse method above in a thread to concurrently build the index
+    public void CallParsers(Analyzer analyzer) {
         try {
             // Open the index directory with an index writer
             Directory directory = FSDirectory.open(Paths.get(indexPath));
@@ -291,6 +269,7 @@ public class ParseIndexDocs {
             config.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
             IndexWriter iwriter = new IndexWriter(directory, config);
 
+            // Create a separate thread for each parser method above
             Thread t1 = new Thread(new Runnable(){public void run(){FBISParser(fbisPath, analyzer, iwriter);
                 System.out.println("Added index: FBIS");}});
             Thread t2 = new Thread(new Runnable(){public void run(){FRParser(frPath, analyzer, iwriter);
@@ -299,35 +278,18 @@ public class ParseIndexDocs {
                 System.out.println("Added index: FT");}});
             Thread t4 = new Thread(new Runnable(){public void run(){LATParser(latPath, analyzer, iwriter);
                 System.out.println("Added index: LAT");}});
+            
+            // Start every thread
             t1.start();
             t2.start();
             t3.start();
             t4.start();
-
+            
+            // Wait until every thread has terminated
             t1.join();
             t2.join();
             t3.join();
             t4.join();
-
-            // Check what the document code is, and the appropriate parser to match the code
-            // if (code == "fbis") {
-            //     FBISParser(fbisPath, analyzer, iwriter);
-            //     System.out.println("Added index: FBIS");
-            // }
-            // else if (code == "fr") {
-            //     FRParser(frPath, analyzer, iwriter);
-            //     System.out.println("Added index: FR");
-            // }
-            // else if (code == "ft") {
-            //     FTParser(ftPath, analyzer, iwriter);
-            //     System.out.println("Added index: FT");
-            // }
-            // else if (code == "lat") {
-            //     LATParser(latPath, analyzer, iwriter);
-            //     System.out.println("Added index: LAT");
-            // }
-
-            // iwriter.addDocuments(docList);
 
             // Close up all open objects
             iwriter.commit();

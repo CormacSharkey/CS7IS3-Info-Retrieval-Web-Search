@@ -20,6 +20,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.queryparser.classic.QueryParserBase;
 
 public class QueryTopics {
 
@@ -115,7 +116,7 @@ public class QueryTopics {
             
             // For loop - loop through every query in the query list, get results from the index and then write them into the results file
             for (String queryBase: queryList) {
-                Query query = queryParser.parse(queryParser.escape(queryBase));
+                Query query = queryParser.parse(QueryParserBase.escape(queryBase));
 
                 ScoreDoc[] hits = isearcher.search(query, MAX_RESULTS).scoreDocs;
 
