@@ -2,3 +2,4 @@
 *.2 linguist-documentation
 
 groupAssignment/data/* linguist-documentation
+groupAssignment/trec_eval-9.0.7/* linguist-documentation
