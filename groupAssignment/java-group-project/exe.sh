@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Purging for fresh run..."
-rm -rf ../index/*
+# rm -rf ../index/*
 rm -rf ../results/*
 echo "Finished purge"
 
