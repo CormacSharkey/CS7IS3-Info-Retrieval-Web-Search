@@ -109,7 +109,7 @@ public class QueryTopics {
             QueryParser queryParser = new MultiFieldQueryParser(queryFields, analyzer);
             
             // Create a results file
-            File resultsFile = new File(resultsPath + "results.txt");
+            new File(resultsPath + "results.txt");
             FileWriter myWriter = new FileWriter(resultsPath + "results.txt");
 
             int counter = 0;
